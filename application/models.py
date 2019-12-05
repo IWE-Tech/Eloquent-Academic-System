@@ -18,12 +18,6 @@ class Student(db.Model):
     enrolleddate = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     password = db.Column(db.String(30), nullable=False)
 
-    courses = db.relationship('Course', secondary='student_and_class_relation')
-
-class student_and_class_relation(db.Model):
-    student_id = db.Column(db.Integer, db.ForeignKey('student.id'), primary_key=True)
-    course_id = db.Column(db.Integer, db.ForeignKey('course.id'), primary_key=True)
-
 class Course(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     coursenumber = db.Column(db.String(10), nullable=False, unique=True)
@@ -34,8 +28,6 @@ class Course(db.Model):
     gpa = db.Column(db.String(5), nullable=False)
     location = db.Column(db.String(10), nullable=False)
     teacher_id = db.Column(db.Integer, db.ForeignKey('teacher.id'), nullable=False)
-
-    students = db.relationship('Student', secondary='student_and_class_relation')
 
 class Teacher(db.Model):
     id = db.Column(db.Integer, primary_key=True)
