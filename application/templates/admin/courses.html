@@ -1,0 +1,26 @@
+{% extends 'admin/_layout.html'%}
+
+{% block content%}
+<table class="table table-striped">
+    <thead><tr>
+        <th>Course Number</th>
+        <th>Course Name</th>
+        <th>Semester</th>
+        <th>Credit</th>
+        <th>Time</th>
+        <th>location</th>
+    </tr></thead>
+    <tbody>
+        {% for course in courses %}
+            <tr>
+                <td>{{ course.coursenumber }}</td>
+                <td>{{ course.coursename }}</td>
+                <td>{{ course.semester }}</td>
+                <td>{{ course.credit }}</td>
+                <td>{{ course.time }}</td>
+                <td>{{ course.location }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
