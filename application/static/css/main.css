@@ -1,0 +1,56 @@
+body {
+    background: #fafafa;
+    color: #333333;
+    margin-top: 5rem;
+  }
+
+.bg-steel {
+    background-color: #070707;
+  }
+  
+  .site-header .navbar-nav .nav-link {
+    color: #cbd5db;
+  }
+  
+  .site-header .navbar-nav .nav-link:hover {
+    color: #ffffff;
+  }
+  
+  .site-header .navbar-nav .nav-link.active {
+    font-weight: 500;
+  }
+  
+
+
+
+
+  .navbar li {
+    color: white;
+}
+
+.site-header {
+  padding-bottom: 4.5rem;
+}
+
+
+.site-header .navbar-collapse .nav-link.active {
+    font-weight: bold;
+}
+
+
+.table-striped ul li {
+    display: inline-block;
+    padding-right: 3px;
+    text-decoration: none;
+}
+
+.table-striped ul li .update-link {
+    background-color: green;
+    color: white;
+    text-decoration: none;
+}
+
+.table-striped ul li .delete-link {
+    background-color: red;
+    color: rgb(233, 227, 227);
+}
