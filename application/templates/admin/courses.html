@@ -9,6 +9,7 @@
         <th>Credit</th>
         <th>Time</th>
         <th>location</th>
+        <th>Teacher ID</th>
     </tr></thead>
     <tbody>
         {% for course in courses %}
@@ -19,6 +20,7 @@
                 <td>{{ course.credit }}</td>
                 <td>{{ course.time }}</td>
                 <td>{{ course.location }}</td>
+                <td>{{ course.teacher_id }}</td>
             </tr>
         {% endfor %}
     </tbody>

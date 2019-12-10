@@ -45,11 +45,17 @@ def add_user():
     password = request.form.get("password")
 
     if id and first and last and role and gender and nationality and email and mobile and password:
-        user = User(user_id=id, firstname=first, lastname=last, role=role, gender=gender, nationality=nationality, email=email, mobile=mobile, password=password)
-        db.session.add(user)
-        db.session.commit()
-        flash('The new user has been added successfully', 'success')
-        return redirect(url_for('add_user'))
+        check_user = User.query.filter_by(user_id=id).first()
+        if check_user:
+            flash('The User is already registered in the system!', 'danger')
+            return redirect(url_for('add_user'))
+        else:
+            user = User(user_id=id, firstname=first, lastname=last, role=role, gender=gender, nationality=nationality, email=email, mobile=mobile, password=password)
+            db.session.add(user)
+            db.session.commit()
+            flash('The new user has been added successfully', 'success')
+            return redirect(url_for('add_user'))
+
 
     return render_template('/admin/add_user.html')
 
@@ -63,12 +69,34 @@ def add_course():
     location = request.form.get("location")
     teacher = request.form.get("teacher")
 
+#Add the course to the database
+#first check if the course isn't already in the system
+#If teacher id is specified, check if the teacher is registered in the system
+ 
     if number and name and time and semester and credit and location:
-        course = Course(coursenumber=number, coursename=name, time=time, semester=semester, credit=credit, location=location, teacher_id=teacher)
-        db.session.add(course)
-        db.session.commit()
-        flash('The course has been successfully added', 'success')
-        return redirect(url_for('add_course'))
+        course = Course.query.filter_by(coursenumber = number).first()
+        if course:
+            flash('The course is already in the system', 'danger')
+            return redirect(url_for('add_course'))
+
+        if teacher is not '':
+            instructor = User.query.filter_by(user_id = teacher).first()
+            instructor_role = 'teacher'
+            if instructor and instructor.role == instructor_role:
+                course = Course(coursenumber=number, coursename=name, time=time, semester=semester, credit=credit, location=location, teacher_id=teacher)
+                db.session.add(course)
+                db.session.commit()
+                flash('The course has been successfully added', 'success')
+            else:
+                flash('The Teacher is not registered in the system', 'danger')
+            return redirect(url_for('add_course'))
+
+        else:
+            course = Course(coursenumber=number, coursename=name, time=time, semester=semester, credit=credit, location=location, teacher_id=None)
+            db.session.add(course)
+            db.session.commit()
+            flash('The course has been successfully added', 'success')
+
     return render_template('/admin/add_course.html')
 
 
