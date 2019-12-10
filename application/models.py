@@ -1,15 +1,21 @@
 from datetime import datetime
-from application import db
+from application import db, login_manager
 from sqlalchemy.orm import relationship
+from flask_login import UserMixin
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(str(user_id))
 
 class Admin(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(10), nullable=False, unique=True)
     password = db.Column(db.String(30), nullable=False)
 
-class User(db.Model):
+class User(db.Model, UserMixin):
     __tablename__ = 'user'
-    user_id = db.Column(db.String(20), primary_key=True)
+    user_id = db.Column(db.String, primary_key=True)
     firstname = db.Column(db.String(30), nullable=False)
     lastname = db.Column(db.String(30), nullable=False)
     role = db.Column(db.String(10), nullable=False)
@@ -19,6 +25,9 @@ class User(db.Model):
     mobile = db.Column(db.String(20), nullable=False, unique=True)
     password = db.Column(db.String(30), nullable=False)
     courses = db.relationship('Course', backref='teacher')
+
+    def get_id(self):
+        return (self.user_id)
 
 class SelectedCourses(db.Model):
     __tablename__ = 'selected_courses'
