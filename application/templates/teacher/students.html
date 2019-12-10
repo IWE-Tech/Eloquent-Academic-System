@@ -1,0 +1,52 @@
+{% extends "teacher/layout.html" %}
+{% block content %}
+<nav class="navbar navbar-dark bg-dark">
+
+    <form class="form-inline">
+    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+    <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Search</button>
+    </form>
+
+    <a class="navbar-brand " href="teacherHome">{{ title }}</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggle-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+        <a class="nav-item nav-link active" href="#">Students<span class="sr-only">(current)</span></a>
+        <a class="nav-item nav-link" href="teacherHome" tabindex="-1">Home</a>
+        <a class="nav-item nav-link" href="#" tabindex="-1">Courses</a>
+        <a class="nav-item nav-link" href="#" tabindex="-1">Events</a>
+        <a class="nav-item nav-link" href="#" tabindex="-1">Schedule</a>
+        </div>
+    </div>
+</nav>
+{% for student in students %}
+<div class="card w-100">
+  <img src="..." class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">{{ student.fullname }}</h5>
+    <p class="card-text">
+        {{ student.studentnumber }}
+    </p>
+    <a href="#" class="btn btn-primary">More Info</a>
+  </div>
+    <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+  <button type="button" class="btn btn-outline-danger btn-secondary bg-dark">remove</button>
+  <button type="button" class="btn btn-outline-info btn-secondary bg-dark">update</button>
+
+  <div class="btn-group" role="group">
+    <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle"
+            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      More Actions
+    </button>
+    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+      <a class="dropdown-item" href="#">Graduated</a>
+      <a class="dropdown-item" href="#">Extend</a>
+    </div>
+  </div>
+</div>
+</div>
+    {% endfor %}
+{% endblock content %}

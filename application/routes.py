@@ -70,3 +70,16 @@ def add_course():
         flash('The course has been successfully added', 'success')
         return redirect(url_for('add_course'))
     return render_template('/admin/add_course.html')
+
+
+@app.route('/teacherHome')
+def teacherHome():
+    return render_template('teacher/teacherHome.html', title='TeacherHome')
+
+@app.route('/students')
+def teacherStudents():
+    #course = Course.query.filter_by(Teacher.teacher_id)
+    #studentID = student_and_class_relation.query.filter_by(course.coursenumber)
+    #student = Student.query.filter_by(studentID.student_id)
+    student = User.query.all()
+    return render_template('teacher/students.html', title='TeacherStudents', students=student)
