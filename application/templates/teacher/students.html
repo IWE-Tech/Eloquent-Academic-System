@@ -1,52 +1,47 @@
-{% extends "teacher/layout.html" %}
+{% extends 'teacher/layout.html' %}
 {% block content %}
-<nav class="navbar navbar-dark bg-dark">
+    <nav class="navbar navbar-dark bg-dark">
 
     <form class="form-inline">
     <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
     <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Search</button>
     </form>
 
-    <a class="navbar-brand " href="teacherHome">{{ title }}</a>
+    <a class="navbar-brand " href="teacherHome">Teacher Home</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
             aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggle-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
-        <a class="nav-item nav-link active" href="#">Students<span class="sr-only">(current)</span></a>
-        <a class="nav-item nav-link" href="teacherHome" tabindex="-1">Home</a>
-        <a class="nav-item nav-link" href="#" tabindex="-1">Courses</a>
-        <a class="nav-item nav-link" href="#" tabindex="-1">Events</a>
-        <a class="nav-item nav-link" href="#" tabindex="-1">Schedule</a>
+        <a class="nav-item nav-link active" href="students">Students<span class="sr-only">(current)</span></a>
+        <a class="nav-item nav-link" href="teacherHome">Home</a>
+        <a class="nav-item nav-link" href="courses" tabindex="-1">Courses</a>
+        <a class="nav-item nav-link" href="teacherevents" tabindex="-1">Events</a>
+        <a class="nav-item nav-link" href="teacherschedule" tabindex="-1">Schedule</a>
+        <a class="nav-item nav-link" href="{{ url_for('logout') }}" tabindex="-1">logout</a>
         </div>
     </div>
 </nav>
-{% for student in students %}
-<div class="card w-100">
-  <img src="..." class="card-img-top" alt="...">
+{% for courses in course %}
+    {% for scourse in select %}
+        {% for students in student %}
+    {% if courses.coursenumber == scourse.course_number and scourse.student_id == students.user_id %}
+<div class="card border-success text-info bg-dark mb-3" style="width: 18rem;">
   <div class="card-body">
-    <h5 class="card-title">{{ student.fullname }}</h5>
-    <p class="card-text">
-        {{ student.studentnumber }}
-    </p>
-    <a href="#" class="btn btn-primary">More Info</a>
+    <h5 class="card-title">{{ students.firstname }} {{ students.lastname }}</h5>
+    <h6 class="card-subtitle mb-2 text-muted">{{ students.user_id }}</h6>
   </div>
-    <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-  <button type="button" class="btn btn-outline-danger btn-secondary bg-dark">remove</button>
-  <button type="button" class="btn btn-outline-info btn-secondary bg-dark">update</button>
-
-  <div class="btn-group" role="group">
-    <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle"
-            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-      More Actions
-    </button>
-    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-      <a class="dropdown-item" href="#">Graduated</a>
-      <a class="dropdown-item" href="#">Extend</a>
-    </div>
-  </div>
+   <ul class="list-group list-group-flush">
+    <li class="list-group-item">{{ students.nationality }}</li>
+    <li class="list-group-item">{{ students.email }}</li>
+    <li class="list-group-item">{{ students.mobile }}</li>
+    <li class="list-group-item">{{ students.gender }}</li>
+    </ul>
+    <a href="students" class="card-link">Students View</a>
 </div>
-</div>
+    {% endif %}
+            {% endfor %}
+        {% endfor %}
     {% endfor %}
 {% endblock content %}

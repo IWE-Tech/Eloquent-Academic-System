@@ -1,6 +1,6 @@
 from flask import render_template, url_for, flash, redirect, request
 from application import app, db, bcrypt
-from application.models import Course, User, Admin
+from application.models import Course, User, Admin, SelectedCourses
 from application.forms import LoginForm
 from flask_login import login_user, current_user, login_required, logout_user
 
@@ -31,7 +31,7 @@ def login():
 
 @app.route('/logout')
 def logout():
-    logout_user
+    logout_user()
     return redirect(url_for('home'))
 
 @app.route('/courses')
@@ -47,7 +47,7 @@ def admin():
 @app.route('/admn/students', methods=['GET', 'POST'])
 def students():
     students = User.query.filter_by(role='student')
-    return render_template('/admin/students.html', students=students)
+    return render_template('/admin/courses.html', students=students)
 
 @app.route('/admn/teachers', methods=['GET', 'POST'])
 def teachers():
@@ -133,12 +133,42 @@ def add_course():
 def teacherHome():
     return render_template('teacher/teacherHome.html', title='TeacherHome')
 
+@app.route('/teachercourse', methods=['GET', 'POST'])
+def teacher_get_course():
+    course = Course.query.filter_by(teacher_id=current_user.user_id).all()
+    return redirect(url_for('teacherStudents', course=course))
+
+@app.route('/teachercourse/select', methods=['GET', 'POST'])
+def teacher_get_studentid():
+    selectSC = SelectedCourses.query.all()
+    return redirect(url_for('teacherStudents', select=selectSC))
+
+@app.route('/teachercourse/student', methods=['GET', 'POST'])
+def teacher_get_students():
+    student = User.query.filter_by(role='student').all()
+    return redirect(url_for('teacherStudents', student=student))
+
+
+@app.route('/courses')
+@login_required
+def teacherCourse():
+
+    course = Course.query.filter_by(teacher_id=current_user.user_id).all()
+
+    return render_template('teacher/courses.html', title='TeacherCourses', course=course)
+
+@app.route('/teacherevents')
+@login_required
+def teacherEvents():
+    return render_template('teacher/teacherevents.html', title='Events')
+
+@app.route('/teacherschedule')
+@login_required
+def teacherSchedule():
+    course = Course.query.filter_by(teacher_id=current_user.user_id)
+    return render_template('teacher/teacherschedule.html', title='Schedule', course=course)
 
 @app.route('/students')
 @login_required
 def teacherStudents():
-    #course = Course.query.filter_by(Teacher.teacher_id)
-    #studentID = student_and_class_relation.query.filter_by(course.coursenumber)
-    #student = Student.query.filter_by(studentID.student_id)
-    student = User.query.all()
-    return render_template('teacher/students.html', title='TeacherStudents', students=student)
+    return render_template('teacher/students.html', title='Students')

@@ -16,9 +16,10 @@
         <div class="navbar-nav">
         <a class="nav-item nav-link active" href="teacherHome">Home<span class="sr-only">(current)</span></a>
         <a class="nav-item nav-link" href="students">Students</a>
-        <a class="nav-item nav-link" href="#" tabindex="-1">Courses</a>
-        <a class="nav-item nav-link" href="#" tabindex="-1">Events</a>
-        <a class="nav-item nav-link" href="#" tabindex="-1">Schedule</a>
+        <a class="nav-item nav-link" href="courses" tabindex="-1">Courses</a>
+        <a class="nav-item nav-link" href="teacherevents" tabindex="-1">Events</a>
+        <a class="nav-item nav-link" href="teacherschedule" tabindex="-1">Schedule</a>
+        <a class="nav-item nav-link" href="{{ url_for('logout') }}" tabindex="-1">logout</a>
         </div>
     </div>
 </nav>
@@ -30,7 +31,7 @@
             <div class="carousel-caption d-none d-md-block">
                  <p>Welcome to your portal</p>
                 <!--<h2>{ current_user.username </h2>-->
-                <h2>Teacher Name</h2>
+                <h2>{{ current_user.firstname }}</h2>
             </div>
         </div>
          <div class="carousel-item active">
@@ -38,7 +39,7 @@
              <div class="carousel-caption d-none d-md-block">
                 <p>Welcome to your portal</p>
                 <!--<h2>{ current_user.username }}</h2>-->
-                <h2>Teacher Name</h2>
+                <h2>{{ current_user.firstname }}</h2>
             </div>
          </div>
          <div class="carousel-item active">
@@ -46,7 +47,7 @@
              <div class="carousel-caption d-none d-md-block">
                  <p>Welcome to your portal</p>
                  <!--<h2>{ current_user.username }}</h2>-->
-                 <h2>Teacher Name</h2>
+                 <h2>{{ current_user.firstname }}</h2>
              </div>
         </div>
     </div>

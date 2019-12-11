@@ -1,0 +1,46 @@
+{% extends 'teacher/layout.html' %}
+{% block content %}
+    <nav class="navbar navbar-dark bg-dark">
+
+    <form class="form-inline">
+    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+    <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Search</button>
+    </form>
+
+    <a class="navbar-brand " href="teacherHome">{{ title }}</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggle-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+        <a class="nav-item nav-link active" href="#">Schedule<span class="sr-only">(current)</span></a>
+        <a class="nav-item nav-link" href="teacherHome" tabindex="-1">Home</a>
+        <a class="nav-item nav-link" href="courses" tabindex="-1">Courses</a>
+        <a class="nav-item nav-link" href="students" tabindex="-1">Students</a>
+        <a class="nav-item nav-link" href="teacherevents" tabindex="-1">Events</a>
+        <a class="nav-item nav-link" href="{{ url_for('logout') }}" tabindex="-1">logout</a>
+        </div>
+    </div>
+</nav>
+     <div class="list-group list-group-horizontal">
+  <button type="button" class="list-group-item list-group-item-action active">
+    Course
+  </button>
+  <button type="button" class="list-group-item list-group-item-action">Time</button>
+  <button type="button" class="list-group-item list-group-item-action">Location</button>
+  <button type="button" class="list-group-item list-group-item-action">Credit</button>
+  <button type="button" class="list-group-item list-group-item-action" >Semester</button>
+</div>
+    {% for course in course %}
+    <div class="list-group list-group-horizontal">
+  <button type="button" class="list-group-item list-group-item-action active">
+    {{ course.coursename }}
+  </button>
+  <button type="button" class="list-group-item list-group-item-action">{{course.time}}</button>
+  <button type="button" class="list-group-item list-group-item-action">{{course.location}}</button>
+  <button type="button" class="list-group-item list-group-item-action">{{course.credit}}</button>
+  <button type="button" class="list-group-item list-group-item-action" >{{course.semester}}</button>
+</div>
+    {% endfor %}
+{% endblock content %}
