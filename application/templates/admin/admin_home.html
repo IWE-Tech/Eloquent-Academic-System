@@ -2,4 +2,36 @@
 
 {% block content%}
 <h2>Welcome Admin</h2>
+ <div class="row">
+         <div class="col-md-4">
+            <div class="card" style="width: 18rem; height: 25rem;">
+                <img src="static/images/teacher.JPG" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">Teachers</h5>
+                  <p class="card-text">Browse the details of all the teachers registered in the system</p>
+                  <a href="{{ url_for('teachers') }}" class="btn btn-primary">Teachers</a>
+                </div>
+              </div>
+         </div>
+         <div class="col-md-4">
+            <div class="card" style="width: 18rem; height: 25rem;">
+                <img src="static/images/students.JPG" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">Students</h5>
+                  <p class="card-text">Browse the details of all the students registered in the system</p>
+                  <a href="{{ url_for('students')}}" class="btn btn-primary">Students</a>
+                </div>
+              </div>
+         </div>
+         <div class="col-md-4">
+            <div class="card" style="width: 18rem; height: 25rem;">
+                <img src="static/images/courses.JPG" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">Courses</h5>
+                  <p class="card-text">Browse the details of all the courses in the system.</p>
+                  <a href="{{ url_for('admin_courses')}}" class="btn btn-primary">Courses</a>
+                </div>
+              </div>
+         </div>
+ </div>
 {% endblock %}

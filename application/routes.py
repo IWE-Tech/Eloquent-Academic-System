@@ -97,6 +97,18 @@ def login():
 
     return render_template('login.html', form = form)
 
+@app.route("/admin_login", methods=['GET', 'POST'])
+def admin_login():
+    form = LoginForm()
+    if form.validate_on_submit():
+        admin = Admin.query.filter_by(username=form.username.data).first()
+        if admin and admin.password==form.password.data:
+            return redirect(url_for('admin'))
+        else:
+            flash('Invalid Login details! Try again.', 'danger')
+
+    return render_template('/admin/admin_login.html', form = form)
+
 @app.route('/logout')
 def logout():
     logout_user()
