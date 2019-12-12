@@ -1,7 +1,7 @@
 {% extends 'admin/_layout.html'%}
 
 {% block content%}
-<h2>Welcome Admin</h2>
+<h2 class="text-center bg-primary text-white">Welcome Admin</h2>
  <div class="row">
          <div class="col-md-4">
             <div class="card" style="width: 18rem; height: 25rem;">
@@ -9,7 +9,7 @@
                 <div class="card-body">
                   <h5 class="card-title">Teachers</h5>
                   <p class="card-text">Browse the details of all the teachers registered in the system</p>
-                  <a href="{{ url_for('teachers') }}" class="btn btn-primary">Teachers</a>
+                  <a href="{{ url_for('teachers') }}" class="btn btn-outline-primary btn-block mt-5">Teachers</a>
                 </div>
               </div>
          </div>
@@ -19,7 +19,7 @@
                 <div class="card-body">
                   <h5 class="card-title">Students</h5>
                   <p class="card-text">Browse the details of all the students registered in the system</p>
-                  <a href="{{ url_for('students')}}" class="btn btn-primary">Students</a>
+                  <a href="{{ url_for('students')}}" class="btn btn-outline-primary btn-block mt-5">Students</a>
                 </div>
               </div>
          </div>
@@ -29,7 +29,7 @@
                 <div class="card-body">
                   <h5 class="card-title">Courses</h5>
                   <p class="card-text">Browse the details of all the courses in the system.</p>
-                  <a href="{{ url_for('admin_courses')}}" class="btn btn-primary">Courses</a>
+                  <a href="{{ url_for('admin_courses')}}" class="btn btn-outline-primary btn-block mt-5">Courses</a>
                 </div>
               </div>
          </div>

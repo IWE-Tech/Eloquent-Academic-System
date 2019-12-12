@@ -76,12 +76,10 @@ def drop_course(course_number):
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
-    student = 'student'
-    teacher = 'teacher'
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(user_id=form.id.data).first()
-        if user and bcrypt.check_password_hash(user.password,form.password.data):  
+        if user and bcrypt.check_password_hash(user.password,form.password.data):
             if user.role == 'teacher':                    #if the user's role is teacher
                 login_user(user)
                 return redirect(url_for('teacherHome', teacher_name=(user.firstname + user.lastname)))
