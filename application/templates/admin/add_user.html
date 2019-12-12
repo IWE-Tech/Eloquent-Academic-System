@@ -1,56 +1,59 @@
 {% extends 'admin/_layout.html'%}
-
-{% block content %}
-
-<form method="POST" action="{{ url_for('add_user')}}" enctype="multipart/form-data">
-    <div class="form-group">
-        <label>User ID</label>
-        <input class="form-control" required="required" name="id">
-    </div>
-    <div class="form-group">
-        <label>First Name</label>
-        <input class="form-control" required="required" name="firstname">
-    </div>
-    <div class="form-group">
-        <label>Last Name</label>
-        <input class="form-control" required="required" name="lastname">
-    </div>
-
-    <div class="form-group">
-        <label>Role</label>
-        <select class="form-control" name="role">
-            <option disabled selected value="">-None-</option>
-            <option value="student">Student</option>
-            <option value="teacher">Teacher</option>
-        </select>
-    </div>
-
-    <div class="form-group">
-        <label>Gender</label>
-        <input class="form-control" required="required" name="gender">
-    </div>
-
-    <div class="form-group">
-        <label>Nationality</label>
-        <input class="form-control" required="required" name="nationality">
-    </div>
-
-    <div class="form-group">
-        <label>Email</label>
-        <input class="form-control" type="email" required="required" name="email">
-    </div>
-
-    <div class="form-group">
-        <label>Mobile Number</label>
-        <input class="form-control" required="required" name="mobile">
-    </div>
-
-    <div class="form-group">
-        <label>Password</label>
-        <input class="form-control" type="password" required="required" name="password">
-    </div>
-
-    <button type="submit" class="btn btn-outline-info">Add User</button>
- </form>
-
-{% endblock %}
+    {% block content %}
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+                    <form method="POST" action="{{ url_for('add_user')}}" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label>User ID</label>
+                            <input class="form-control" required="required" name="id">
+                        </div>
+                        <div class="form-group">
+                            <label>First Name</label>
+                            <input class="form-control" required="required" name="firstname">
+                        </div>
+                        <div class="form-group">
+                            <label>Last Name</label>
+                            <input class="form-control" required="required" name="lastname">
+                        </div>
+                    
+                        <div class="form-group">
+                            <label>Role</label>
+                            <select class="form-control" name="role">
+                                <option disabled selected value="">-None-</option>
+                                <option value="student">Student</option>
+                                <option value="teacher">Teacher</option>
+                            </select>
+                        </div>
+                    
+                        <div class="form-group">
+                            <label>Gender</label>
+                            <input class="form-control" required="required" name="gender">
+                        </div>
+                    
+                        <div class="form-group">
+                            <label>Nationality</label>
+                            <input class="form-control" required="required" name="nationality">
+                        </div>
+                    
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input class="form-control" type="email" required="required" name="email">
+                        </div>
+                    
+                        <div class="form-group">
+                            <label>Mobile Number</label>
+                            <input class="form-control" required="required" name="mobile">
+                        </div>
+                    
+                        <div class="form-group">
+                            <label>Password</label>
+                            <input class="form-control" type="password" required="required" name="password">
+                        </div>
+                    
+                        <button type="submit" class="btn btn-outline-info btn-block">Add User</button>
+                     </form>
+            </div>
+            <div class="col-md-2"></div>
+        </div>
+    {% endblock %}

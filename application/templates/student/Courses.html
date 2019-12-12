@@ -36,7 +36,7 @@
                             <td>{{ course.coursename }}</td>
                             <td>{{ course.credit }}</td>
                             <td>{{ course.time }}</td>
-                            <td>{{ course.teacher }}</td>
+                            <td>{{ course.teacher.firstname }} {{ course.teacher.lastname }}</td>
                             <td><a href="{{ url_for('select_course', course_number=course.coursenumber) }}" class="btn btn-outline-success">Select</a></td>
                         </tr>
                     {% endfor %}

@@ -189,20 +189,33 @@ def add_course():
             instructor = User.query.filter_by(user_id = teacher).first()
             instructor_role = 'teacher'
             if instructor and instructor.role == instructor_role:
-                course = Course(coursenumber=number, coursename=name, time=time, semester=semester, credit=credit, location=location, teacher_id=teacher)
-                db.session.add(course)
-                db.session.commit()
-                flash('The course has been successfully added', 'success')
+                course = Course(coursenumber=number, coursename=name, time=time, semester=semester,
+                credit=credit, location=location, teacher_id=teacher)
+                # take care if there is a course with same time at same location
+                c_with_sl_at_st = Course.query.filter(and_(Course.location == location, Course.time == time)).first()
+                if c_with_sl_at_st:
+                    flash('There is a course with same time and location registered before!', 'danger')
+                    return redirect(url_for('add_course'))
+                else:
+                    db.session.add(course)
+                    db.session.commit()
+                    flash('The course has been successfully added', 'success')
             else:
                 flash('The Teacher is not registered in the system', 'danger')
             return redirect(url_for('add_course'))
 
         else:
-            course = Course(coursenumber=number, coursename=name, time=time, semester=semester, credit=credit, location=location, teacher_id=None)
-            db.session.add(course)
-            db.session.commit()
-            flash('The course has been successfully added', 'success')
-
+            course = Course(coursenumber=number, coursename=name, time=time, semester=semester,
+            credit=credit, location=location, teacher_id=None)
+            # take care if there is a course with same time at same location
+            c_with_sl_at_st = Course.query.filter(and_(Course.location == location, Course.time == time)).first()
+            if c_with_sl_at_st:
+                flash('There is a course with same time and location registered before!', 'danger')
+                return redirect(url_for('add_course'))
+            else:
+                db.session.add(course)
+                db.session.commit()
+                flash('The course has been successfully added', 'success')
     return render_template('/admin/add_course.html')
 
 

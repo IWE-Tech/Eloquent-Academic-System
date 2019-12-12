@@ -4,21 +4,21 @@
         <div class="col-md-3"></div>
         <div class="col-md-6">
                 <div class="container">
-                        {% with messages = get_flashed_messages(with_categories=true)%}
-                            {% if messages %}
-                                {% for category, message in messages %}
-                                    <div class="alert alert-{{ category }}">
-                                    {{ message }}
-                                    </div>
-                                {%endfor%}
-                            {% endif %}
-                        {% endwith%}
-                    </div>
+                    {% with messages = get_flashed_messages(with_categories=true)%}
+                        {% if messages %}
+                            {% for category, message in messages %}
+                                <div class="alert alert-{{ category }}">
+                                {{ message }}
+                                </div>
+                            {%endfor%}
+                        {% endif %}
+                    {% endwith%}
+                </div>
             <div class='content-section'>
                 <form method="POST" , action="">
                     {{ form.hidden_tag() }}
                     <fieldset class="form-group">
-                        <legend class="border_bottom mb-4">Login</legend>
+                        <legend class="border-bottom mb-4 text-center">Welcome Back!</legend>
                         <div class="form-group">
                             {{ form.id.label(class="form-control-label") }}
                             {% if form.id.errors %}
@@ -65,15 +65,15 @@
                     </fieldset>
             
                     <div class="form-group">
-                        {{ form.submit(class='btn btn-outline-info')}}
-            
-                        <small class="text-muted ml-2">
-                            <a href="#">Forgot Password?</a>
-                            || Are you an Admin? <a href="{{ url_for('admin_login')}}">Admin Login</a>
-                        </small>
+                        {{ form.submit(class='btn btn-outline-info btn-block')}}
                     </div>
             
                 </form>
+                <div class="border-top pt-3">
+                    <p class="text-muted text-center">
+                        Are you an Admin? <b>-></b> <a href="{{ url_for('admin_login') }}" style="text-decoration: none;">Admin Login</a>
+                    </p>
+                </div>
             
             </div>
         </div>
