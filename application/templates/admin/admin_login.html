@@ -7,15 +7,15 @@
                 <form method="POST" , action="">
                     {{ form.hidden_tag() }}
                     <fieldset class="form-group">
-                        <legend class="border_bottom mb-4">Login</legend>
+                        <legend class="border_bottom mb-4">Admin Login</legend>
             
             
                         <div class="form-group">
-                            {{ form.id.label(class="form-control-label") }}
-                            {% if form.id.errors %}
-                            {{form.id(class="form-control form-control-lg is-invalid") }}
+                            {{ form.username.label(class="form-control-label") }}
+                            {% if form.username.errors %}
+                            {{form.username(class="form-control form-control-lg is-invalid") }}
                             <div class="invalid-feedback">
-                                {% for error in form.id.errors %}
+                                {% for error in form.username.errors %}
                                 <span>{{ error }}</span>
             
                                 {% endfor%}
@@ -23,7 +23,7 @@
                             </div>
                             {% else %}
             
-                            {{form.id(class="form-control form-control-lg") }}
+                            {{form.username(class="form-control form-control-lg") }}
             
                             {%endif%}
                         </div>
@@ -48,11 +48,6 @@
                         </div>
             
             
-                        <div class="form-check">
-                            {{ form.remember(class="form-check-input")}}
-                            {{ form.remember.label(class="form-check-label")}}
-                        </div>
-            
                     </fieldset>
             
                     <div class="form-group">
@@ -60,7 +55,7 @@
             
                         <small class="text-muted ml-2">
                             <a href="#">Forgot Password?</a>
-                            || Are you an Admin? <a href="{{ url_for('admin_login')}}">Admin Login</a>
+                            || Are you a user? <a href="{{ url_for('login')}}">User Login</a>
                         </small>
                     </div>
             
