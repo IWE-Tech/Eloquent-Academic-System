@@ -211,42 +211,33 @@ def add_course():
 def teacherHome():
     return render_template('teacher/teacherHome.html', title='TeacherHome')
 
-@app.route('/teachercourse', methods=['GET', 'POST'])
-def teacher_get_course():
-    course = Course.query.filter_by(teacher_id=current_user.user_id).all()
-    return redirect(url_for('teacherStudents', course=course))
 
-@app.route('/teachercourse/select', methods=['GET', 'POST'])
-def teacher_get_studentid():
-    selectSC = SelectedCourses.query.all()
-    return redirect(url_for('teacherStudents', select=selectSC))
-
-@app.route('/teachercourse/student', methods=['GET', 'POST'])
-def teacher_get_students():
-    student = User.query.filter_by(role='student').all()
-    return redirect(url_for('teacherStudents', student=student))
-
-
-@app.route('/courses')
+@app.route('/teacher/<string:teacher_id>/courses', methods=['GET', 'POST'])
 @login_required
-def teacherCourse():
+def teacherCourse(teacher_id):
 
-    course = Course.query.filter_by(teacher_id=current_user.user_id).all()
+    courses = Course.query.filter_by(teacher_id=teacher_id).all()
 
-    return render_template('teacher/courses.html', title='TeacherCourses', course=course)
+    return render_template('/teacher/courses.html', title='TeacherCourses', courses=courses)
 
 @app.route('/teacherevents')
 @login_required
 def teacherEvents():
-    return render_template('teacher/teacherevents.html', title='Events')
+    return render_template('/teacher/teacherevents.html', title='Events')
 
 @app.route('/teacherschedule')
 @login_required
 def teacherSchedule():
     course = Course.query.filter_by(teacher_id=current_user.user_id)
-    return render_template('teacher/teacherschedule.html', title='Schedule', course=course)
+    return render_template('/teacher/teacherschedule.html', title='Schedule', course=course)
 
-@app.route('/students')
+@app.route('/teacher/<string:coursenumber>/students')
 @login_required
-def teacherStudents():
-    return render_template('teacher/students.html', title='Students')
+def teacherStudents(coursenumber):
+    students = SelectedCourses.query.filter_by(course_number=coursenumber).all()
+    return render_template('/teacher/students.html', title='Students', students=students)
+
+@app.route('/teachercourse/students/<string:student_id>', methods=['GET', 'POST'])
+def teacher_get_student(student_id):
+    student = User.query.filter_by(user_id=student_id).first()
+    return render_template('/teacher/studentInfo.html', student=student)

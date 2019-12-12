@@ -15,8 +15,7 @@
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
         <a class="nav-item nav-link active" href="teacherHome">Home<span class="sr-only">(current)</span></a>
-        <a class="nav-item nav-link" href="students">Students</a>
-        <a class="nav-item nav-link" href="courses" tabindex="-1">Courses</a>
+        <a class="nav-item nav-link" href="{{ url_for('teacherCourse', teacher_id=current_user.user_id)}}" tabindex="-1">Courses</a>
         <a class="nav-item nav-link" href="teacherevents" tabindex="-1">Events</a>
         <a class="nav-item nav-link" href="teacherschedule" tabindex="-1">Schedule</a>
         <a class="nav-item nav-link" href="{{ url_for('logout') }}" tabindex="-1">logout</a>

@@ -23,15 +23,15 @@
         </div>
     </div>
 </nav>
-{% for student in students %}
+{% for course in courses %}
 <div class="card w-100">
   <img src="..." class="card-img-top" alt="...">
   <div class="card-body">
-    <h5 class="card-title">{{ student.coursename }}</h5>
+    <h5 class="card-title">{{ course.coursename }}</h5>
     <p class="card-text">
-        {{ student.coursenumber }}
+        {{ course.coursenumber }}
     </p>
-    <a href="teachercourse" class="btn btn-primary">More Info</a>
+    <a href="{{url_for('teacherStudents', coursenumber=course.coursenumber)}}" class="btn btn-primary">More Info</a>
   </div>
     <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
   <button type="button" class="btn btn-outline-danger btn-secondary bg-dark">remove</button>

@@ -23,13 +23,18 @@
         </div>
     </div>
 </nav>
-{% for student in students%}
 
-<ul class="list-group list-group-flush">
+<div class="card border-success text-info bg-dark mb-3" style="width: 18rem;">
+    <div class="card-body">
+      <h5 class="card-title">{{ student.firstname }} {{ student.lastname }}</h5>
+      <h6 class="card-subtitle mb-2 text-muted">{{ student.user_id }}</h6>
+    </div>
+     <ul class="list-group list-group-flush">
+      <li class="list-group-item">{{ student.nationality }}</li>
+      <li class="list-group-item">{{ student.mobile}}</li>
+      <li class="list-group-item">{{ student.email}}</li>
+      <li class="list-group-item">{{student.gender}}</li>
+      </ul>
+  </div>
 
-    <li class="list-group-item" ><a href="{{ url_for('teacher_get_student', student_id=student.student_id)}}">{{student.student_id}}</a></li>
-</ul>
-</div>
-
-{% endfor %}
 {% endblock content %}
