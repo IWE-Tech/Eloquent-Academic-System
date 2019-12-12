@@ -1,4 +1,4 @@
-{% extends "layout.html" %}
+{% extends "student/layout.html" %}
     {% block content %}
     <div class="row">
         <div class="col-md-2"></div>
@@ -40,6 +40,7 @@
             </table>
             {%set total_credit = db.session.query(func.sum(SelectedCourses.course_credit)).filter(SelectedCourses.student_id ==
                 student.user_id).scalar() %}
+
                 {% set MaximumCredits = 25 %}
             <p class="text-center">Total Credits for this semester: <span class="text-primary">{{ total_credit }}</span><br><small>Maximum credits: <span class="text-primary">{{ MaximumCredits }}</span> you have <span class="text-primary">{{ (MaximumCredits)|int - (total_credit)|int }}</span> more credits to increase you credits</small></p>
         </div>

@@ -14,7 +14,7 @@ def home():
 
 @app.route('/MyCourses')
 def my_courses():
-    student = User.query.filter_by(role='student').first()
+    student = User.query.filter_by(user_id=current_user.user_id).first()
     my_courses = Course.query.join(SelectedCourses, Course.coursenumber == SelectedCourses.course_number).filter_by(student_id=student.user_id).all()
     return render_template('student/my_courses.html', my_courses=my_courses, student=student,
     SelectedCourses=SelectedCourses, func=func, db=db)
@@ -26,7 +26,7 @@ def courses_selection():
 
 @app.route('/Course/<string:course_number>/Select', methods=['GET', 'POST'])
 def select_course(course_number):
-    student = User.query.filter_by(role='student').first()
+    student = User.query.filter_by(user_id=current_user.user_id).first()
     result = SelectedCourses.query.filter(and_(SelectedCourses.student_id == student.user_id,
     SelectedCourses.course_number==course_number)).first()
     
@@ -44,9 +44,11 @@ def select_course(course_number):
         SelectedCourses.course_time == this_course.time)).first()
         total_credit = db.session.query(func.sum(SelectedCourses.course_credit)).filter(SelectedCourses.student_id ==
         student.user_id).scalar()
-        if int(total_credit) + int(this_course.credit) > 25:
-            flash('You have reached maximum semester credits!', 'warning')
-            return redirect(url_for('courses_selection'))
+       
+
+        # if int(total_credit) + int(this_course.credit) > 25:
+        #     flash('You have reached maximum semester credits!', 'warning')
+        #     return redirect(url_for('courses_selection'))
         if c_with_st:
             flash('You have another class at this time!', 'danger')
             return redirect(url_for('courses_selection'))
@@ -58,7 +60,7 @@ def select_course(course_number):
 
 @app.route('/Course/<string:course_number>/drop', methods=['GET', 'POST'])
 def drop_course(course_number):
-    student = User.query.filter_by(role='student').first()
+    student = User.query.filter_by(user_id=current_user.user_id).first()
     result = SelectedCourses.query.filter(and_(SelectedCourses.student_id == student.user_id,
     SelectedCourses.course_number==course_number)).first()
     if result:
@@ -77,13 +79,14 @@ def login():
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(user_id=form.id.data).first()                   #query the user from the database
-        if user and bcrypt.check_password_hash(user.password, form.password.data):  
+        if user.user_id == form.id.data and user.password == form.password.data:  
             if user.role == teacher:                    #if the user's role is teacher
                 login_user(user)
                 return redirect(url_for('teacherHome', teacher_name=(user.firstname + user.lastname)))
 
             elif user.role == student:                  #if the user's role is student
-                pass
+                login_user(user)
+                return redirect(url_for('my_courses'))
         else:
             flash('Login failed, please check your id and password', 'danger')
 
@@ -107,7 +110,7 @@ def admin():
 @app.route('/admn/students', methods=['GET', 'POST'])
 def students():
     students = User.query.filter_by(role='student')
-    return render_template('/admin/courses.html', students=students)
+    return render_template('/admin/students.html', students=students)
 
 @app.route('/admn/teachers', methods=['GET', 'POST'])
 def teachers():
@@ -132,13 +135,13 @@ def add_user():
     password = request.form.get("password")
 
     if id and first and last and role and gender and nationality and email and mobile and password:
-        hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
+        #hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
         check_user = User.query.filter_by(user_id=id).first()
         if check_user:
             flash('The User is already registered in the system!', 'danger')
             return redirect(url_for('add_user'))
         else:
-            user = User(user_id=id, firstname=first, lastname=last, role=role, gender=gender, nationality=nationality, email=email, mobile=mobile, password=hashed_password)
+            user = User(user_id=id, firstname=first, lastname=last, role=role, gender=gender, nationality=nationality, email=email, mobile=mobile, password=password)
             db.session.add(user)
             db.session.commit()
             flash('The new user has been added successfully', 'success')
