@@ -1,7 +1,7 @@
 from flask import render_template, url_for, flash, redirect, request
 from application import app, db, bcrypt
 from application.models import Course, User, Admin, SelectedCourses
-from application.forms import LoginForm
+from application.forms import LoginForm, AdminLoginForm
 from sqlalchemy import func, and_
 from datetime import date
 from flask_login import login_user, current_user, login_required, logout_user
@@ -97,7 +97,7 @@ def login():
 
 @app.route("/admin_login", methods=['GET', 'POST'])
 def admin_login():
-    form = LoginForm()
+    form = AdminLoginForm()
     if form.validate_on_submit():
         admin = Admin.query.filter_by(username=form.username.data).first()
         if admin and admin.password==form.password.data:
