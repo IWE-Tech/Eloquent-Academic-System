@@ -7,7 +7,7 @@
     <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Search</button>
     </form>
 
-    <a class="navbar-brand " href="teacherHome">{{ title }}</a>
+    <a class="navbar-brand " href="{{ url_for('teacherHome')}}}}">{{ title }}</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
             aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggle-icon"></span>
@@ -16,22 +16,21 @@
         <div class="navbar-nav">
         <a class="nav-item nav-link active" href="#">Courses<span class="sr-only">(current)</span></a>
         <a class="nav-item nav-link" href="teacherHome" tabindex="-1">Home</a>
-        <a class="nav-item nav-link" href="students" tabindex="-1">Students</a>
         <a class="nav-item nav-link" href="teacherevents" tabindex="-1">Events</a>
         <a class="nav-item nav-link" href="teacherschedule" tabindex="-1">Schedule</a>
         <a class="nav-item nav-link" href="{{ url_for('logout') }}" tabindex="-1">logout</a>
         </div>
     </div>
 </nav>
-{% for student in students %}
+{% for course in courses %}
 <div class="card w-100">
   <img src="..." class="card-img-top" alt="...">
   <div class="card-body">
-    <h5 class="card-title">{{ student.coursename }}</h5>
+    <h5 class="card-title">{{ course.coursename }}</h5>
     <p class="card-text">
-        {{ student.coursenumber }}
+        {{ course.coursenumber }}
     </p>
-    <a href="teachercourse" class="btn btn-primary">More Info</a>
+    <a href="{{url_for('teacherStudents', coursenumber=course.coursenumber)}}" class="btn btn-primary">More Info</a>
   </div>
     <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
   <button type="button" class="btn btn-outline-danger btn-secondary bg-dark">remove</button>
