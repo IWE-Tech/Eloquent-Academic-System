@@ -1,0 +1,29 @@
+{% extends "student/layout.html" %}
+    {% block content %}
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6 row">
+                <div class="col-md-6">
+                    <div class="card" style="width: 20rem; height: 25rem;">
+                        <img src="{{ url_for('static', filename='images/my_courses.jpeg') }}" class="card-img-top" alt="...">
+                        <div class="card-body">
+                          <h5 class="card-title">My Courses</h5>
+                          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                          <a href="{{ url_for('my_courses') }}" class="btn btn-outline-primary btn-block mt-5">My courses</a>
+                        </div>
+                      </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card" style="width: 20rem; height: 25rem;">
+                        <img src="{{ url_for('static', filename='images/course_selection.jpeg') }}" class="card-img-top" alt="...">
+                        <div class="card-body">
+                          <h5 class="card-title">Courses Selection</h5>
+                          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                          <a href="{{ url_for('courses_selection') }}" class="btn btn-outline-success btn-block">Courses selection</a>
+                        </div>
+                      </div>
+                </div>
+            </div>
+            <div class="col-md-3"></div>
+        </div>
+    {% endblock %}

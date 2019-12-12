@@ -10,7 +10,13 @@ from flask_login import login_user, current_user, login_required, logout_user
 
 @app.route('/')
 def home():
-    return render_template('home.html')
+    if current_user.is_authenticated:
+        if current_user.role == 'student':
+            return render_template('student/home.html')
+        else:
+            return render_template('home.html')
+    else:
+        return render_template('home.html')
 
 @app.route('/MyCourses')
 def my_courses():
@@ -82,7 +88,7 @@ def login():
 
             elif user.role == 'student':                  #if the user's role is student
                 login_user(user)
-                return redirect(url_for('my_courses'))
+                return render_template('student/home.html')
             else:
                 flash('Unknown error occured')
                 return redirect(url_for('home'))

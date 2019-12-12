@@ -20,18 +20,17 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarToggle">
                     <div class="navbar-nav mr-auto">
+                            <a class="nav-item nav-link" href="{{ url_for('home') }}">Home</a>
                         <a class="nav-item nav-link" href="#">About</a>
-                        <a class="nav-item nav-link" href="{{ url_for('courses_selection') }}">CourseSelection</a>
-                        <a class="nav-item nav-link" href="{{ url_for('my_courses') }}">My Courses</a>
                     </div>
                     <!-- Navbar Right Side -->
                     <div class="navbar-nav">
                         {% if current_user.is_authenticated %}
-                        <a class="nav-item nav-link" href="{{ url_for('logout')}}">Logout</a>
+                        <a class="nav-item nav-link float-right" href="{{ url_for('logout')}}">Logout</a>
 
                         {% else %}
-                        <a class="nav-item nav-link" href="{{url_for('admin')}}">Go to Admin</a>
-                        <a class="nav-item nav-link" href="{{ url_for('login')}}">Login</a>
+                        <a class="nav-item nav-link float-right" href="{{url_for('admin')}}">Go to Admin</a>
+                        <a class="nav-item nav-link float-right" href="{{ url_for('login')}}">Login</a>
                         {% endif %}
 
                     </div>
