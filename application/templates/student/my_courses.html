@@ -1,0 +1,48 @@
+{% extends "layout.html" %}
+    {% block content %}
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+        <div class="container">
+                {% with messages = get_flashed_messages(with_categories=true)%}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            <div class="alert alert-{{ category }}">
+                            {{ message }}
+                            </div>
+                        {%endfor%}
+                    {% endif %}
+                {% endwith%}
+            </div>
+            <h4 class="text-primary text-center"><span>StudentID: {{ student.user_id}} -- </span>
+            <span>FullName: {{ student.firstname }} {{ student.lastname }}</span></h4> 
+            <table class="table table-bordered">
+                <thead><tr class="bg-primary text-white">
+                    <th>CourseNumber</th>
+                    <th>CourseName</th>
+                    <th>Credit</th>
+                    <th>Time</th>
+                    <th>Teacher</th>
+                    <th>Drop</th>
+                </tr></thead>
+                <tbody>
+                    {% for course in my_courses %}
+                        <tr>
+                            <td>{{ course.coursenumber }}</td>
+                            <td>{{ course.coursename }}</td>
+                            <td>{{ course.credit }}</td>
+                            <td>{{ course.time }}</td>
+                            <td>{{ course.teacher }}</td>
+                            <td><a href="{{ url_for('drop_course', course_number=course.coursenumber) }}" class="btn btn-outline-danger">Drop</a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {%set total_credit = db.session.query(func.sum(SelectedCourses.course_credit)).filter(SelectedCourses.student_id ==
+                student.user_id).scalar() %}
+                {% set MaximumCredits = 25 %}
+            <p class="text-center">Total Credits for this semester: <span class="text-primary">{{ total_credit }}</span><br><small>Maximum credits: <span class="text-primary">{{ MaximumCredits }}</span> you have <span class="text-primary">{{ (MaximumCredits)|int - (total_credit)|int }}</span> more credits to increase you credits</small></p>
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+    {% endblock %}

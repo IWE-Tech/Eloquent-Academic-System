@@ -2,6 +2,8 @@ from flask import render_template, url_for, flash, redirect, request
 from application import app, db, bcrypt
 from application.models import Course, User, Admin, SelectedCourses
 from application.forms import LoginForm
+from sqlalchemy import func, and_
+from datetime import date
 from flask_login import login_user, current_user, login_required, logout_user
 
 
@@ -9,6 +11,64 @@ from flask_login import login_user, current_user, login_required, logout_user
 @app.route('/')
 def home():
     return render_template('home.html')
+
+@app.route('/MyCourses')
+def my_courses():
+    student = User.query.filter_by(role='student').first()
+    my_courses = Course.query.join(SelectedCourses, Course.coursenumber == SelectedCourses.course_number).filter_by(student_id=student.user_id).all()
+    return render_template('student/my_courses.html', my_courses=my_courses, student=student,
+    SelectedCourses=SelectedCourses, func=func, db=db)
+
+@app.route('/course_selection', methods=['GET', 'POST'])
+def courses_selection():
+    courses = Course.query.all()
+    return render_template('student/Courses.html', courses=courses, date=date)
+
+@app.route('/Course/<string:course_number>/Select', methods=['GET', 'POST'])
+def select_course(course_number):
+    student = User.query.filter_by(role='student').first()
+    result = SelectedCourses.query.filter(and_(SelectedCourses.student_id == student.user_id,
+    SelectedCourses.course_number==course_number)).first()
+    
+    if result:
+        flash('You have already selected this course', 'info')
+        return redirect(url_for('courses_selection'))
+    else:
+        this_course = Course.query.filter_by(coursenumber=course_number).first()
+        course = SelectedCourses(student_id=student.user_id,
+        course_number=course_number, course_time=this_course.time,
+        course_credit=this_course.credit)
+        #                                  ***
+        # we have to check if this student have or not a class at the time of this course before he/she select
+        c_with_st = SelectedCourses.query.filter(and_(SelectedCourses.student_id == student.user_id,
+        SelectedCourses.course_time == this_course.time)).first()
+        total_credit = db.session.query(func.sum(SelectedCourses.course_credit)).filter(SelectedCourses.student_id ==
+        student.user_id).scalar()
+        if int(total_credit) + int(this_course.credit) > 25:
+            flash('You have reached maximum semester credits!', 'warning')
+            return redirect(url_for('courses_selection'))
+        if c_with_st:
+            flash('You have another class at this time!', 'danger')
+            return redirect(url_for('courses_selection'))
+        else:
+            db.session.add(course)
+            db.session.commit()
+            flash('Successfully selected', 'success')
+            return redirect(url_for('courses_selection'))
+
+@app.route('/Course/<string:course_number>/drop', methods=['GET', 'POST'])
+def drop_course(course_number):
+    student = User.query.filter_by(role='student').first()
+    result = SelectedCourses.query.filter(and_(SelectedCourses.student_id == student.user_id,
+    SelectedCourses.course_number==course_number)).first()
+    if result:
+        db.session.delete(result)
+        db.session.commit()
+        flash('Successfully droped', 'success')
+        return redirect(url_for('my_courses'))
+    else:
+        flash('You did not selected this course yet', 'info')
+        return redirect(url_for('my_courses'))
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():

@@ -33,6 +33,8 @@ class SelectedCourses(db.Model):
     __tablename__ = 'selected_courses'
     student_id = db.Column(db.String(20), db.ForeignKey('user.user_id'), primary_key=True)
     course_number = db.Column(db.String(10), db.ForeignKey('course.coursenumber'), primary_key=True)
+    course_time = db.Column(db.String(10), nullable=False)
+    course_credit = db.Column(db.String(10), nullable=False)
 
 class Course(db.Model):
     __tablename__ = 'course'

@@ -1,0 +1,48 @@
+{% extends "layout.html" %}
+    {% block content %}
+    <div class="row">
+        <div class="col-md-2"></div> 
+        <div class="col-md-8">
+        <div class="container">
+                {% with messages = get_flashed_messages(with_categories=true)%}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            <div class="alert alert-{{ category }}">
+                            {{ message }}
+                            </div>
+                        {%endfor%}
+                    {% endif %}
+                {% endwith%}
+            </div>
+            {% set date = date.today() %}
+            {% if date.month > 11 %}
+            <h4 class="text text-center text-primary">Course Selection for {{ (date.year)|int + 1 }} Spring</h4> 
+            {% else %}
+                <h4 class="text text-center text-primary">Course Selection for {{ date.year }} Autumn</h4>
+            {% endif %}
+            <table class="table table-bordered">
+                <thead><tr class="bg-primary text-white">
+                    <th>CourseNumber</th>
+                    <th>CourseName</th>
+                    <th>Credit</th>
+                    <th>Time</th>
+                    <th>Teacher</th>
+                    <th>Select</th>
+                </tr></thead>
+                <tbody>
+                    {% for course in courses %}
+                        <tr>
+                            <td>{{ course.coursenumber }}</td>
+                            <td>{{ course.coursename }}</td>
+                            <td>{{ course.credit }}</td>
+                            <td>{{ course.time }}</td>
+                            <td>{{ course.teacher }}</td>
+                            <td><a href="{{ url_for('select_course', course_number=course.coursenumber) }}" class="btn btn-outline-success">Select</a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+    {% endblock %}
